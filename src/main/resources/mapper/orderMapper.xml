@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.nean.boss.mapper.OrderMapper">
+
+
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `order` ( uid,goods_id,pay_money,pay_type,flag,create_time,update_time )
+        VALUES
+            (#{order.uid},#{order.goodsId},#{order.payMoney},#{order.payType},#{order.flag},#{order.createTime},NOW())
+    </insert>
+    <update id="updateFlagById">
+        UPDATE `order` SET flag = 2
+        WHERE id = #{orderId}
+    </update>
+    <select id="queryById" resultType="cn.nean.boss.model.Order">
+        SELECT *
+            FROM `order`
+        WHERE id = #{orderId}
+    </select>
+</mapper>
