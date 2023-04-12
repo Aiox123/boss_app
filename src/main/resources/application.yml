@@ -6,6 +6,14 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  #邮箱配置
+  mail:
+    host: smtp.qq.com
+    username: 2801912027@qq.com
+    password: rtrglxapnofvddcj
+    from : 2801912027@qq.com
+    default-encoding: utf-8
+
 mybatis:
   type-aliases-package: cn.nean.boss.model
   mapper-locations: classpath:mapper/*.xml

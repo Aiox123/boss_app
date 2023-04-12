@@ -2,8 +2,10 @@ package cn.nean.boss.service.impl;
 
 import cn.nean.boss.common.RestResponse;
 import cn.nean.boss.mapper.OrderMapper;
-import cn.nean.boss.model.Order;
+import cn.nean.boss.model.dto.OrderDto;
+import cn.nean.boss.model.pojo.Order;
 import cn.nean.boss.service.OrderService;
+import cn.nean.boss.util.EmailUtil;
 import io.netty.util.HashedWheelTimer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     HashedWheelTimer hashedWheelTimer;
 
+    @Autowired
+    EmailUtil emailUtil;
+
     /*
     * 提交订单
     * */
@@ -39,6 +44,34 @@ public class OrderServiceImpl implements OrderService {
             },1, TimeUnit.MINUTES);
         }
         return null;
+    }
+
+    /*
+    * 支付订单
+    * */
+    @Override
+    public RestResponse<String> payOrder(OrderDto orderDto) {
+        // dto -> po
+        Order order = orderDtoToPo(orderDto);
+        int isUpdate = orderMapper.updateOrder(order);
+        if(isUpdate > 0){
+            // 更新成功!
+            Long userId = 2L;
+            // 查询用户信息 获取用户邮箱
+            // 1.发送邮件开通 Vip 成功! MQ
+            emailUtil.sendEmail("","Boss Vip 服务开通","恭喜您开通 Vip 成功！");
+            // 2.设置 Vip 有效期到 Redis
+        }
+        return null;
+    }
+
+    private Order orderDtoToPo(OrderDto orderDto){
+          return Order.builder()
+                .id(orderDto.getOrderId())
+                .payMoney(orderDto.getPayMoney())
+                .payType(orderDto.getPayType())
+                .flag(orderDto.getFlag())
+                .build();
     }
 
     /*

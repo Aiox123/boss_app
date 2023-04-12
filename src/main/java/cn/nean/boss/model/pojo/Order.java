@@ -1,4 +1,4 @@
-package cn.nean.boss.model;
+package cn.nean.boss.model.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

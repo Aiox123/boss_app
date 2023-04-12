@@ -14,7 +14,13 @@
         UPDATE `order` SET flag = 2
         WHERE id = #{orderId}
     </update>
-    <select id="queryById" resultType="cn.nean.boss.model.Order">
+
+    <update id="updateOrder">
+        UPDATE `order` SET pay_money = #{order.payMoney}, pay_type = #{order.payType}, flag = #{order.flag}
+        WHERE id = #{order.id}
+    </update>
+
+    <select id="queryById" resultType="cn.nean.boss.model.pojo.Order">
         SELECT *
             FROM `order`
         WHERE id = #{orderId}

@@ -1,6 +1,6 @@
 package cn.nean.boss.mapper;
 
-import cn.nean.boss.model.Order;
+import cn.nean.boss.model.pojo.Order;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +22,9 @@ public interface OrderMapper {
     * 更新订单状态为已取消
     * */
     int updateFlagById(@Param("orderId") Long orderId);
+
+    /*
+    * 更新订单信息
+    * */
+    int updateOrder(@Param("order") Order order);
 }
