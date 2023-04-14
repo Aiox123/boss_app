@@ -33,7 +33,7 @@ public class OrderApi {
     @GetMapping("/pay")
     public String payOrder(){
         OrderDto orderDto = OrderDto.builder()
-                .orderId(1L)
+                .orderId(6L)
                 .payMoney(200.10)
                 .payType(1)
                 .flag(1)

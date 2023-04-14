@@ -1,8 +1,10 @@
 package cn.nean.boss.service.impl;
 
 import cn.nean.boss.common.RestResponse;
+import cn.nean.boss.event.publisher.OpenVipEventPublisher;
 import cn.nean.boss.mapper.OrderMapper;
 import cn.nean.boss.model.dto.OrderDto;
+import cn.nean.boss.model.message.EmailMsg;
 import cn.nean.boss.model.pojo.Order;
 import cn.nean.boss.service.OrderService;
 import cn.nean.boss.util.EmailUtil;
@@ -27,6 +29,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     EmailUtil emailUtil;
+
+    @Autowired
+    OpenVipEventPublisher openVipEventPublisher;
 
     /*
     * 提交订单
@@ -59,7 +64,13 @@ public class OrderServiceImpl implements OrderService {
             Long userId = 2L;
             // 查询用户信息 获取用户邮箱
             // 1.发送邮件开通 Vip 成功! MQ
-            emailUtil.sendEmail("","Boss Vip 服务开通","恭喜您开通 Vip 成功！");
+            EmailMsg emailMsg = EmailMsg.builder()
+                    .to("1797408348@qq.com")
+                    .title("您开通Boss Vip 服务成功")
+                    .message("nd wml")
+                    .build();
+            openVipEventPublisher.publish(emailMsg);
+            //emailUtil.sendEmail("","Boss Vip 服务开通","恭喜您开通 Vip 成功！");
             // 2.设置 Vip 有效期到 Redis
         }
         return null;

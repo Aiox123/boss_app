@@ -13,7 +13,6 @@ class BossApplicationTests {
 
 	@Test
 	void contextLoads() {
-		emailUtil.sendEmail("2522754658@qq.com","test","test");
 	}
 
 }
